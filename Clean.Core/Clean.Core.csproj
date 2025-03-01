@@ -1,19 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>Library</OutputType>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <RootNamespace>Clean.Core</RootNamespace>
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>Clean.Core</PackageId>
-        <PackageVersion>8.0.0</PackageVersion>
-        <RootNamespace>Clean.Core</RootNamespace>
+        <PackageId>Smits.Clean.Core</PackageId>
+        <PackageVersion>8.0.6</PackageVersion>
+        <Title>Clean Architecture Infrastructure</Title>
+        <Authors>Kay Smits</Authors>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.3.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     </ItemGroup>
 </Project>

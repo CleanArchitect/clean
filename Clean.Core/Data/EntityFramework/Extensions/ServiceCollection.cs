@@ -5,8 +5,13 @@ namespace Clean.Core;
 
 public static class EntityFrameworkServiceCollectionExtensions
 {
-    public static IServiceCollection AddCleanEntityFramework<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> options = null) where TDbContext : DbContext =>
+    public static IServiceCollection AddCleanEntityFramework<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> options = null, Type typeEntityGateway = null) where TDbContext : DbContext =>
         services
-            .AddScoped(typeof(IEntityGateway<>), typeof(EntityFrameworkRepository<>))
-            .AddDbContext<DbContext, TDbContext>(options);
+            .AddDbContext<DbContext, TDbContext>(options)
+            .AddEntityGateway(typeEntityGateway ?? typeof(EntityFrameworkRepository<>));
+
+    private static IServiceCollection AddEntityGateway(this IServiceCollection services, Type typeEntityGateway) =>
+        typeEntityGateway.Implements(typeof(IEntityGateway<>))
+            ? services.AddScoped(typeof(IEntityGateway<>), typeEntityGateway)
+            : throw new InvalidOperationException();
 }

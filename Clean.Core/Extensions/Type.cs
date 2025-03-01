@@ -10,7 +10,6 @@ public static class TypeExtensions
     private static bool ImplementsInterface(this Type type, Type interfaceType) =>
         type
             .GetInterfaces()
-            .Where(typeInterfaceType => !typeInterfaceType.IsGenericType)
             .Contains(interfaceType);
 
     private static bool ImplementsGenericInterface(this Type type, Type interfaceType) =>
