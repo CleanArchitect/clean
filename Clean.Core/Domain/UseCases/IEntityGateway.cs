@@ -4,11 +4,13 @@ namespace Clean.Core;
 
 public interface IEntityGateway<TEntity> where TEntity : Entity
 {
+    IEntityGateway<TEntity> Add(TEntity entity);
+
     Task<TEntity> FindAsync(Guid id);
     TEntity Find(Guid id) => FindAsync(id).Result;
 
-    Task<IEnumerable<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate);
-    IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> predicate) => WhereAsync(predicate).Result;
+    Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null);
+    IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null) => GetAllAsync(predicate).Result;
 
     Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate, bool orDefault = false);
     TEntity Single(Expression<Func<TEntity, bool>> predicate, bool orDefault = false) => SingleAsync(predicate, orDefault).Result;
@@ -19,9 +21,8 @@ public interface IEntityGateway<TEntity> where TEntity : Entity
     Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
     bool Any(Expression<Func<TEntity, bool>> predicate) => AnyAsync(predicate).Result;
 
-    IEntityGateway<TEntity> Add(TEntity entity);
-
-    IEntityGateway<TEntity> Delete(params Guid[] ids);
+    IEntityGateway<TEntity> Delete(IEnumerable<object> keys);
+    IEntityGateway<TEntity> Delete(object key) => Delete([key]);
 
     Task SaveChangesAsync();
     void SaveChanges() => Task.Run(SaveChangesAsync);

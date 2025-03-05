@@ -10,7 +10,7 @@ internal sealed class EntityFrameworkRepository<TEntity>(DbContext dbContext, IE
             .Set<TEntity>()
             .FindAsync(id);
 
-    public async Task<IEnumerable<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate) =>
+    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null) =>
         await dbContext
             .Set<TEntity>()
             .Where(predicate)
@@ -41,17 +41,22 @@ internal sealed class EntityFrameworkRepository<TEntity>(DbContext dbContext, IE
 
     public IEntityGateway<TEntity> Add(TEntity entity)
     {
-        dbContext.Set<TEntity>().Add(entity);
+        dbContext
+            .Set<TEntity>()
+            .Add(entity);
+
         return this;
     }
 
-    public IEntityGateway<TEntity> Delete(params Guid[] ids)
+    public IEntityGateway<TEntity> Delete(IEnumerable<object> keys)
     {
-        var entities = dbContext
-            .Set<TEntity>()
-            .Where(entity => ids.Contains(entity.Id));
+        var entities = keys.Select(key =>
+            dbContext.Set<TEntity>().Find(key));
 
-        dbContext.RemoveRange(entities);
+        dbContext
+            .Set<TEntity>()
+            .RemoveRange(entities);
+
         return this;
     }
 
