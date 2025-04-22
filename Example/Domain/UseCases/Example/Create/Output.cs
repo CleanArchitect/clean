@@ -2,9 +2,15 @@
 
 namespace Example.Domain;
 
-internal sealed class CreateExampleOutput(Example example) : IOutput
+public sealed class CreateExampleOutput : IOutput
 {
-    public Guid? Id => example.Id;
+    public Guid? Id { get; }
 
-    public ExampleModel Example => ExampleModel.Create(example);
+    public ExampleModel Example { get; }
+
+    internal CreateExampleOutput(Example example)
+    {
+        Id = example.Id;
+        Example = ExampleModel.Create(example);
+    }
 }

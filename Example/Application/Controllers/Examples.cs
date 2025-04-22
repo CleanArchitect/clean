@@ -8,6 +8,10 @@ namespace Example.Application;
 [Route("[controller]")]
 public sealed class ExamplesController(IInputHandler handler) : CleanController
 {
+    [HttpGet]
+    public async Task<ActionResult<GetAllExamplesOutput>> GetAll() =>
+        Ok(await handler.HandleAsync(new GetAllExampleInput()));
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> Get(Guid id) =>
         Ok(await handler.HandleAsync(new GetExampleInput(id)));

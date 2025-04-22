@@ -9,7 +9,7 @@
 
     <PropertyGroup>
         <PackageId>Smits.Clean.Core</PackageId>
-        <PackageVersion>8.0.13</PackageVersion>
+        <PackageVersion>8.1.5</PackageVersion>
         <Title>Clean Architecture Infrastructure</Title>
         <Authors>Kay Smits</Authors>
     </PropertyGroup>

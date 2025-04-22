@@ -2,7 +2,12 @@
 
 namespace Example.Domain;
 
-internal sealed class GetExampleOutput(Example example) : IOutput
+public sealed class GetExampleOutput : IOutput
 {
-    public ExampleModel Example => ExampleModel.Create(example);
+    public ExampleModel Example { get; }
+
+    internal GetExampleOutput(Example example)
+    {
+        Example = ExampleModel.Create(example);
+    }
 }

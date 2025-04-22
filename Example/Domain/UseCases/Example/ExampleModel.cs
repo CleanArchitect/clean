@@ -1,11 +1,17 @@
 ﻿namespace Example.Domain;
 
-internal sealed class ExampleModel(Example example)
+public sealed class ExampleModel
 {
-    public Guid Id => example.Id;
+    public Guid Id { get; }
 
-    public string Name => example.Name;
+    public string Name { get; }
 
-    public static ExampleModel Create(Example example) =>
+    internal ExampleModel(Example example)
+    {
+        Id = example.Id;
+        Name = example.Name;
+    }
+
+    internal static ExampleModel Create(Example example) =>
         example == null ? null : new(example);
 }

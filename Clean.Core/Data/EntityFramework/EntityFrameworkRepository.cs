@@ -11,10 +11,14 @@ internal sealed class EntityFrameworkRepository<TEntity>(DbContext dbContext, IE
             .FindAsync(id);
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null) =>
-        await dbContext
-            .Set<TEntity>()
-            .Where(predicate)
-            .ToArrayAsync();
+        predicate is null
+            ? await dbContext
+                .Set<TEntity>()
+                .ToArrayAsync()
+            : await dbContext
+                .Set<TEntity>()
+                .Where(predicate)
+                .ToArrayAsync();
 
     public async Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate, bool orDefault = false) =>
         orDefault
