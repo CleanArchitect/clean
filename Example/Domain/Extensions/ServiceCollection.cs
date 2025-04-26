@@ -1,4 +1,4 @@
-﻿using Clean.Core;
+﻿using Clean.Net;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Example.Domain;

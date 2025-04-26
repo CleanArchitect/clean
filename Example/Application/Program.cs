@@ -1,4 +1,4 @@
-using Clean.Core;
+using Clean.Net;
 using Example.Application;
 using Example.Data;
 using Example.Domain;
@@ -27,7 +27,7 @@ app
 app
     .MapGroup("/minimal/examples")
     .ToExamples()
-    .WithValidation();
+    .WithInputValidation();
 
 app.MapControllers();
 

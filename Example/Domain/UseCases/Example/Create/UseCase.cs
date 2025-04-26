@@ -1,4 +1,4 @@
-﻿using Clean.Core;
+﻿using Clean.Net;
 
 namespace Example.Domain;
 

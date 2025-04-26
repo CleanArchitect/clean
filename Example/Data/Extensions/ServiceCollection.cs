@@ -1,4 +1,4 @@
-﻿using Clean.Core;
+﻿using Clean.Net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

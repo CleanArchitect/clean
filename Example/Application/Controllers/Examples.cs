@@ -1,4 +1,4 @@
-﻿using Clean.Core;
+﻿using Clean.Net;
 using Example.Domain;
 using Microsoft.AspNetCore.Mvc;
 
