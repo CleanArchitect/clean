@@ -1,6 +1,10 @@
 ﻿namespace Clean.Net;
 
-public static class MimeTypes
+/// <summary>
+/// Contains some basic MIME types for most common file types.
+/// Extend on this partial class with your own used MIME types if needed.
+/// </summary>
+public static partial class MimeType
 {
     public static readonly string Csv = Types[".csv"];
     public static readonly string Docx = Types[".docx"];
@@ -9,12 +13,19 @@ public static class MimeTypes
     public static readonly string Png = Types[".png"];
     public static readonly string Pdf = Types[".pdf"];
     public static readonly string Rar = Types[".rar"];
+    public static readonly string Txt = Types[".txt"];
     public static readonly string Xlsx = Types[".xlsx"];
     public static readonly string Xml = Types[".xml"];
     public static readonly string Zip = Types[".zip"];
 
-    public static readonly IReadOnlyDictionary<string, string> Types = new Dictionary<string, string>()
+    /// <summary>
+    /// Dictionary with most common file extensions and their MIME types (based on MDN docs).
+    /// Add an extension and MIME type if needed at startup of your application.
+    /// <see href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types"/>
+    /// </summary>
+    public static readonly Dictionary<string, string> Types = new()
     {
+        { ".7z", "application/x-7z-compressed" },
         { ".aac", "audio/aac" },
         { ".abw", "application/x-abiword" },
         { ".apk", "application/vnd.android.package-archive" },
@@ -83,13 +94,15 @@ public static class MimeTypes
         { ".svg", "image/svg+xml" },
         { ".tar", "application/x-tar" },
         { ".ttf", "font/ttf" },
+        { ".txt", "text/plain" },
         { ".webm", "video/webm" },
         { ".webp", "image/webp" },
         { ".woff", "font/woff" },
         { ".woff2", "font/woff2" },
         { ".xhtml", "application/xhtml+xml" },
+        { ".xls", "application/vnd.ms-excel" },
         { ".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" },
         { ".xml", "application/xml" },
         { ".zip", "application/zip" }
-    }.AsReadOnly();
+    };
 }

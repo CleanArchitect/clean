@@ -2,6 +2,10 @@
 
 namespace Clean.Net;
 
+/// <summary>
+/// Injectable service usable as gateway for a specific type of Entity <see cref="Entity"/>.
+/// Contains methods to create, read, update or delete domain entities (CRUD).
+/// </summary>
 public interface IEntityGateway<TEntity> where TEntity : Entity
 {
     IEntityGateway<TEntity> Add(TEntity entity);
