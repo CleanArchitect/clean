@@ -10,7 +10,7 @@
     <PropertyGroup>
         <PackageId>Clean.Net</PackageId>
         <PackageVersion>8.0.1</PackageVersion>
-        <Title>Clean Architecture Infrastructure</Title>
+        <Title>Clean Architecture for .NET</Title>
         <Description>
             Clean.Net is a C# .NET package to support your solution using Clean Architecture
             and Domain-Driven Design principles.
