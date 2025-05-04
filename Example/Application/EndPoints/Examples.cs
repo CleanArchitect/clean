@@ -7,13 +7,15 @@ internal static class Examples
 {
     public static RouteGroupBuilder ToExamples(this RouteGroupBuilder group)
     {
-        group.MapGet("/", Get);
+        group.MapGet("/{id:guid}", Get).Produces<GetExampleOutput>();
 
-        group.MapPost("/", Create);
+        group.MapGet("/", GetAll).Produces<GetAllExamplesOutput>();
 
-        group.MapPatch("/{id:guid}", Patch);
+        group.MapPost("/", Create).Produces<CreateExampleOutput>();
 
-        group.MapDelete("/{id:guid}", Delete);
+        group.MapPatch("/{id:guid}", Patch).Produces<IOutput>();
+
+        group.MapDelete("/{id:guid}", Delete).Produces<IOutput>();
 
         return group;
     }
@@ -21,8 +23,11 @@ internal static class Examples
     private static async Task<IResult> Get(IInputHandler handler, Guid id) =>
         Results.Ok(await handler.HandleAsync(new GetExampleInput(id)));
 
+    private static async Task<IResult> GetAll(IInputHandler handler) =>
+        Results.Ok(await handler.HandleAsync(new GetAllExamplesInput()));
+
     private static async Task<IResult> Create(IInputHandler handler, CreateExampleInput input) =>
-        CreatedAt("/examples", await handler.HandleAsync(input) as ICreatedOutput);
+        CreatedAt("/examples", await handler.HandleAsync(input));
 
     private static async Task<IResult> Patch(IInputHandler handler, Guid id, UpdateExampleInput input) =>
         Results.Ok(await handler.HandleAsync(input.SetId(id)));

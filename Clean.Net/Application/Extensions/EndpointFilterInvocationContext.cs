@@ -7,23 +7,23 @@ namespace Clean.Net;
 
 internal static class EndpointFilterInvocationContextExtensions
 {
-    public static async Task<ValidationResult> ValidateAsync<T>(this EndpointFilterInvocationContext context) where T : new()
+    public static async Task<ValidationResult> ValidateAsync<TInput>(this EndpointFilterInvocationContext context) where TInput : IInput, new()
     {
-        var input = context.GetArgumentOfType<T>();
-        var validator = context.GetService<IValidator<T>>();
+        var input = context.GetArgumentOfType<TInput>();
+        var validator = context.GetService<IValidator<TInput>>();
 
         return validator != null
             ? await validator.ValidateAsync(input)
-            : null;
+            : new ValidationResult();
     }
 
-    public static TService GetService<TService>(this EndpointFilterInvocationContext context) =>
+    private static TService GetService<TService>(this EndpointFilterInvocationContext context) =>
         context
             .HttpContext
             .RequestServices
             .GetService<TService>();
 
-    public static T GetArgumentOfType<T>(this EndpointFilterInvocationContext context) where T : new() =>
+    private static T GetArgumentOfType<T>(this EndpointFilterInvocationContext context) where T : new() =>
         context
             .Arguments
             .OfType<T>()

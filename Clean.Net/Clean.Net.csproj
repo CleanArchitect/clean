@@ -20,7 +20,7 @@
         <RepositoryUrl>https://github.com/CleanArchitect/clean</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageTags>Clean, CleanCode, CleanArchitecture, Domain-Driven-Design, DDD, .NET, C#</PackageTags>
+        <PackageTags>Clean, CleanCode, CleanArchitecture, Domain-Driven-Design, DDD, .NET, C#, FluentValidation, EntityFramework, UseCases</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>

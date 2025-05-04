@@ -3,7 +3,7 @@ using System.Net;
 
 namespace Clean.Net;
 
-internal sealed class InputValidationFilter<TInput> : IEndpointFilter where TInput : IInput, new()
+internal sealed class InputFluentValidationFilter<TInput> : IEndpointFilter where TInput : IInput, new()
 {
     public async ValueTask<object> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {

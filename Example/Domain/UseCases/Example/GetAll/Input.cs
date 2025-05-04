@@ -2,7 +2,7 @@
 
 namespace Example.Domain;
 
-public sealed class GetAllExampleInput : IInput
+public sealed class GetAllExamplesInput : IInput
 {
 }
 

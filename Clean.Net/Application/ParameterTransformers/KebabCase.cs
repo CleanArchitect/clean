@@ -4,7 +4,8 @@ using System.Text.RegularExpressions;
 namespace Clean.Net;
 
 /// <summary>
-/// An implementation of <see cref="IOutboundParameterTransformer"/> that converts route values from PascalCase to lowercase kebab.
+/// An implementation of <see cref="IOutboundParameterTransformer"/> 
+/// that converts route values from PascalCase to lowercase kebab.
 /// For example API route: /Api/TodoItems/ becomes /api/todo-items/
 /// </summary>
 public class KebabCaseOutputParameterTransformer : IOutboundParameterTransformer

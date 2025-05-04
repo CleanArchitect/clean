@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Example.Data;
+namespace Example.Infrastructure;
 
 internal sealed class ExampleEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Example>
 {

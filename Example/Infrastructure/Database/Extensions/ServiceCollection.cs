@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Example.Data;
+namespace Example.Infrastructure;
 
-public static class DataServiceCollectionExtensions
+internal static class InfrastructureDatabaseServiceCollectionExtensions
 {
-    public static IServiceCollection AddData(this IServiceCollection services, string connectionString) =>
+    public static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString) =>
         services
             .AddCleanEntityFramework<ExampleDbContext>(options => options
                 .UseNpgsql(connectionString)

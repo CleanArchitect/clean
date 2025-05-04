@@ -16,12 +16,12 @@ public static class DomainServiceCollectionExtensions
     /// <param name="services">The ServiceCollection where services will be registered to.</param>
     /// <param name="domainAssembly">Assembly used for scanning for implementations. Defaults to calling Assembly.</param>
     /// <param name="serviceLifetime">Lifetime for all implementations of services. Defaults to Scoped.</param>
-    /// <returns></returns>
+    /// <returns>The modified <see cref="IServiceCollection"/> with registered services.</returns>
     public static IServiceCollection AddCleanDomain(this IServiceCollection services, Assembly domainAssembly = null, ServiceLifetime serviceLifetime = ServiceLifetime.Scoped) =>
         services
             .AddServices(typeof(IValidator<>), domainAssembly ??= Assembly.GetCallingAssembly(), serviceLifetime)
             .AddServices(typeof(IUseCase<>), domainAssembly, serviceLifetime)
             .AddServices(typeof(IEventHandler<>), domainAssembly, serviceLifetime)
-            .AddScoped<IInputHandler, InputHandler>()
+            .AddSingleton<IInputHandler, InputHandler>()
             .AddSingleton<IEventBus, EventBus>();
 }

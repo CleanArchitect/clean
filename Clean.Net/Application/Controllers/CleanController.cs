@@ -3,7 +3,8 @@
 namespace Clean.Net;
 
 /// <summary>
-/// Provides a base controller for handling common API responses for <see cref="IOutput"/> output from <see cref="IInputHandler"/>.
+/// Provides a base controller for handling common API responses 
+/// for <see cref="IOutput"/> that comes from <see cref="IInputHandler"/>.
 /// </summary>
 public abstract partial class CleanController : ControllerBase
 {
@@ -26,5 +27,5 @@ public abstract partial class CleanController : ControllerBase
 
     [NonAction]
     protected FileResult File(IFileOutput output) =>
-        File(output.File, output.Filename.MimeType(), output.Filename);
+        File(output.File, output.Filename.ToMimeType(), output.Filename);
 }

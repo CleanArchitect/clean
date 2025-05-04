@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Application", "Exam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Domain", "Example\Domain\Example.Domain.csproj", "{57CA4A63-E835-48C2-B445-D8C7D9CD5E7E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Data", "Example\Data\Example.Data.csproj", "{8A0AA12F-76D5-4914-A3BA-E23E074EF22D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Infrastructure", "Example\Infrastructure\Example.Infrastructure.csproj", "{8A0AA12F-76D5-4914-A3BA-E23E074EF22D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,7 +6,7 @@
 public interface IOutput { }
 
 /// <summary>
-/// Defines a specific Output for when a domain entity is created. 
+/// Defines an Output for when a domain entity is created. 
 /// Holds the Id of the created Entity.
 /// </summary>
 public interface ICreatedOutput : IOutput
@@ -15,7 +15,7 @@ public interface ICreatedOutput : IOutput
 }
 
 /// <summary>
-/// Defines a specific Output for a file.
+/// Defines an Output for a file.
 /// </summary>
 public interface IFileOutput : IOutput
 {
@@ -23,12 +23,27 @@ public interface IFileOutput : IOutput
     string Filename { get; }
 }
 
-/// <summary>
-/// A default empty IOutput, can be used when a use case has no output.
-/// </summary>
 public static class Output
 {
+    /// <summary>
+    /// An empty IOutput, can be used when a Use Case has no content for output.
+    /// </summary>
     public static IOutput Empty => new EmptyOutput();
 
+    public static ICreatedOutput Created(Guid id) => new CreatedOutput(id);
+
+    public static IFileOutput File(byte[] file, string filename) => new FileOutput(file, filename);
+
     private sealed class EmptyOutput : IOutput { }
+
+    private sealed class CreatedOutput(Guid id) : ICreatedOutput
+    {
+        public Guid? Id => id;
+    }
+
+    private sealed class FileOutput(byte[] file, string filename) : IFileOutput
+    {
+        public byte[] File => file;
+        public string Filename => filename;
+    }
 }

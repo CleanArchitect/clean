@@ -20,6 +20,7 @@ public static partial class MimeType
 
     /// <summary>
     /// Dictionary with most common file extensions and their MIME types (based on MDN docs).
+    /// Key is file extension with . included, for example ".png".
     /// Add an extension and MIME type if needed at startup of your application.
     /// <see href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types"/>
     /// </summary>
@@ -105,4 +106,23 @@ public static partial class MimeType
         { ".xml", "application/xml" },
         { ".zip", "application/zip" }
     };
+
+    /// <summary>
+    /// Get the MIME type for a given filename with file extension including dot.
+    /// Use <see cref="Types"/> instead if you know the file extension.
+    /// </summary>
+    /// <param name="filename">String containing a filename (with extension)</param>
+    /// <returns>The MIME type for found extension in string or null when no extension in <paramref name="filename"/>></returns>
+    /// <exception cref="KeyNotFoundException">When extension in filename but unknown in <see cref="Types"/></exception>
+    public static string ToMimeType(this string filename)
+    {
+        var extension = Path.GetExtension(filename);
+
+        if (string.IsNullOrWhiteSpace(extension))
+            return null;
+
+        return Types.TryGetValue(extension, out var mimeType)
+            ? mimeType
+            : throw new KeyNotFoundException($"MIME type unknown for extension: '{extension}'. Add extension/MIME type to MimeType.Types dictionary at startup.");
+    }
 }
