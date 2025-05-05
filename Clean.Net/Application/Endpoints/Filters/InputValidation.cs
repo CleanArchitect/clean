@@ -9,7 +9,7 @@ internal sealed class InputFluentValidationFilter<TInput> : IEndpointFilter wher
     {
         var validationResult = await context.ValidateAsync<TInput>();
 
-        return validationResult == null || validationResult?.IsValid == true
+        return validationResult?.IsValid ?? true
             ? await next.Invoke(context)
             : Results.ValidationProblem(validationResult.ToDictionary(), statusCode: (int)HttpStatusCode.BadRequest);
     }

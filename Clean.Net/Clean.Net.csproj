@@ -17,6 +17,7 @@
         </Description>
         <Authors>Kay Smits</Authors>
         <Owners>Kay Smits</Owners>
+        <ReadmeFile>README.md</ReadmeFile>
         <RepositoryUrl>https://github.com/CleanArchitect/clean</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -28,5 +29,9 @@
         <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.3.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.15" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Clean.Net.Tests" />
     </ItemGroup>
 </Project>

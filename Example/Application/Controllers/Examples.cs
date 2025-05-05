@@ -12,13 +12,13 @@ public sealed class ExamplesController(IInputHandler handler) : CleanController
     public async Task<ActionResult<GetAllExamplesOutput>> GetAll() =>
         Ok(await handler.HandleAsync(new GetAllExamplesInput()));
 
+    [HttpPost]
+    public async Task<ActionResult<ICreatedOutput>> Create([FromBody] CreateExampleInput input) =>
+        CreatedAt(nameof(Get), await handler.HandleAsync(input));
+
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<GetExampleOutput>> Get(Guid id) =>
         Ok(await handler.HandleAsync(new GetExampleInput(id)));
-
-    [HttpPost]
-    public async Task<ActionResult<CreateExampleOutput>> Create([FromBody] CreateExampleInput input) =>
-        CreatedAtAction(nameof(Get), await handler.HandleAsync(input));
 
     [HttpPatch("{id:guid}")]
     public async Task<ActionResult<IOutput>> Update(Guid id, [FromBody] UpdateExampleInput input) =>

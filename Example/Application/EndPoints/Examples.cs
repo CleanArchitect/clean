@@ -7,11 +7,11 @@ internal static class Examples
 {
     public static RouteGroupBuilder ToExamples(this RouteGroupBuilder group)
     {
-        group.MapGet("/{id:guid}", Get).Produces<GetExampleOutput>();
-
         group.MapGet("/", GetAll).Produces<GetAllExamplesOutput>();
 
-        group.MapPost("/", Create).Produces<CreateExampleOutput>();
+        group.MapPost("/", Create).Produces<ICreatedOutput>();
+
+        group.MapGet("/{id:guid}", Get).Produces<GetExampleOutput>();
 
         group.MapPatch("/{id:guid}", Patch).Produces<IOutput>();
 

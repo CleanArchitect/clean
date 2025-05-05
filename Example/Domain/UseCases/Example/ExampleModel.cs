@@ -13,5 +13,5 @@ public sealed class ExampleModel
     }
 
     internal static ExampleModel Create(Example example) =>
-        example == null ? null : new(example);
+        example is null ? null : new(example);
 }

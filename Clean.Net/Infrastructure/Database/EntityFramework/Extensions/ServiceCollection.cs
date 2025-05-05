@@ -6,7 +6,7 @@ namespace Clean.Net;
 public static class EntityFrameworkServiceCollectionExtensions
 {
     /// <summary>
-    /// Configures and registers Entity Framework DbContext along with an Entity Gateway <see cref="IEntityGateway{TEntity}"/> in the service collection.
+    /// Configures and registers Entity Framework DbContext along with an default <see cref="IEntityGateway{TEntity}"/> in the service collection.
     /// </summary>
     /// <typeparam name="TDbContext">The type of the Entity Framework database context to be registered.</typeparam>
     /// <param name="services">The <see cref="IServiceCollection"/> where the services will be registered.</param>
@@ -27,5 +27,5 @@ public static class EntityFrameworkServiceCollectionExtensions
     private static IServiceCollection AddEntityGateway(this IServiceCollection services, Type typeEntityGateway) =>
         typeEntityGateway.Implements(typeof(IEntityGateway<>))
             ? services.AddScoped(typeof(IEntityGateway<>), typeEntityGateway)
-            : throw new InvalidOperationException($"Invalid Type:'{typeEntityGateway}' must implement IEntityGateway");
+            : throw new InvalidOperationException($"Invalid Type:'{typeEntityGateway}' must implement IEntityGateway<TEntity>");
 }

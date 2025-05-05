@@ -12,8 +12,12 @@ public static class ConfigurationManagerExtentions
     /// <param name="configurationManager">The configuration manager instance used to retrieve settings.</param>
     /// <param name="options">An optional delegate to configure binding options.</param>
     /// <returns>An instance of <typeparamref name="TAppSettings"/> with bound and validated configuration values.</returns>
-    public static TAppSettings GetAppSettings<TAppSettings>(this ConfigurationManager configurationManager, Action<BinderOptions> options = null) where TAppSettings : Settings =>
+    public static TAppSettings GetAppSettings<TAppSettings>(this IConfiguration configurationManager, Action<BinderOptions> options = null) where TAppSettings : Settings =>
         configurationManager
-            .Get<TAppSettings>(defaultOptions => defaultOptions.WithBindNonPublicProperties(options))
+            .Get<TAppSettings>(defaultOptions =>
+            {
+                defaultOptions.BindNonPublicProperties = true;
+                options?.Invoke(defaultOptions);
+            })
             .Validate() as TAppSettings;
 }

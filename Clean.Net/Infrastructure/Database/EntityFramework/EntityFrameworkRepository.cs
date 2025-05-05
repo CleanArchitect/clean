@@ -3,14 +3,14 @@ using System.Linq.Expressions;
 
 namespace Clean.Net;
 
-internal sealed class EntityFrameworkRepository<TEntity>(DbContext dbContext, IEventBus eventBus) : IEntityGateway<TEntity> where TEntity : Entity
+public class EntityFrameworkRepository<TEntity>(DbContext dbContext, IEventBus eventBus) : IEntityGateway<TEntity> where TEntity : Entity
 {
-    public async Task<TEntity> FindAsync(params object[] key) =>
+    public virtual async Task<TEntity> FindAsync(params object[] keyValues) =>
         await dbContext
             .Set<TEntity>()
-            .FindAsync(key);
+            .FindAsync(keyValues);
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null) =>
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null) =>
         predicate is null
             ? await dbContext
                 .Set<TEntity>()
@@ -20,7 +20,7 @@ internal sealed class EntityFrameworkRepository<TEntity>(DbContext dbContext, IE
                 .Where(predicate)
                 .ToArrayAsync();
 
-    public async Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate, bool orDefault = false) =>
+    public virtual async Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate, bool orDefault = false) =>
         orDefault
             ? await dbContext
                 .Set<TEntity>()
@@ -29,7 +29,7 @@ internal sealed class EntityFrameworkRepository<TEntity>(DbContext dbContext, IE
                 .Set<TEntity>()
                 .SingleAsync(predicate);
 
-    public async Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> predicate, bool orDefault = false) =>
+    public virtual async Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> predicate, bool orDefault = false) =>
         orDefault
             ? await dbContext
                 .Set<TEntity>()
@@ -38,12 +38,12 @@ internal sealed class EntityFrameworkRepository<TEntity>(DbContext dbContext, IE
                 .Set<TEntity>()
                 .FirstAsync(predicate);
 
-    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate) =>
+    public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate) =>
         await dbContext
             .Set<TEntity>()
             .AnyAsync(predicate);
 
-    public IEntityGateway<TEntity> Add(TEntity entity)
+    public virtual IEntityGateway<TEntity> Add(TEntity entity)
     {
         dbContext
             .Set<TEntity>()
@@ -52,11 +52,11 @@ internal sealed class EntityFrameworkRepository<TEntity>(DbContext dbContext, IE
         return this;
     }
 
-    public async Task<IEntityGateway<TEntity>> DeleteAsync(params object[] key)
+    public virtual async Task<IEntityGateway<TEntity>> DeleteAsync(params object[] keyValues)
     {
         var entity = await dbContext
             .Set<TEntity>()
-            .FindAsync(key) ?? throw new NullReferenceException($"Entity not found with key: '{key}'");
+            .FindAsync(keyValues) ?? throw new NullReferenceException($"Entity not found with key(s): '{string.Join(',', keyValues)}'");
 
         dbContext
             .Set<TEntity>()
@@ -67,8 +67,10 @@ internal sealed class EntityFrameworkRepository<TEntity>(DbContext dbContext, IE
 
     public async Task SaveChangesAsync()
     {
-        await eventBus.RaiseEventAsync(dbContext.ChangeTracker.GetRaisedEvents());
+        var raisedEvents = dbContext.ChangeTracker.GetAndClearRaisedEvents();
 
         await dbContext.SaveChangesAsync();
+
+        await eventBus.RaiseEventAsync(raisedEvents);
     }
 }

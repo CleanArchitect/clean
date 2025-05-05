@@ -12,6 +12,6 @@ internal sealed class CreateExampleUseCase(IEntityGateway<Example> gateway) : IU
             .Add(example)
             .SaveChangesAsync();
 
-        return new CreateExampleOutput(example);
+        return Output.Created(example.Id);
     }
 }

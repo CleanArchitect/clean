@@ -12,7 +12,7 @@ internal static class EndpointFilterInvocationContextExtensions
         var input = context.GetArgumentOfType<TInput>();
         var validator = context.GetService<IValidator<TInput>>();
 
-        return validator != null
+        return validator is not null
             ? await validator.ValidateAsync(input)
             : new ValidationResult();
     }

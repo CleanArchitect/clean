@@ -9,7 +9,7 @@ namespace Clean.Net;
 public abstract partial class CleanController : ControllerBase
 {
     [NonAction]
-    protected CreatedAtActionResult CreatedAtAction(string actionName, ICreatedOutput output, params (string Key, object Value)[] additionalRouteValues)
+    protected CreatedAtActionResult CreatedAt(string actionName, ICreatedOutput output, params (string Key, object Value)[] additionalRouteValues)
     {
         var routeValues = additionalRouteValues
             .ToDictionary(

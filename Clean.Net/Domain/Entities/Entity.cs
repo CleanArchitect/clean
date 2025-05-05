@@ -13,4 +13,6 @@ public abstract class Entity
     public IReadOnlyCollection<IEvent> RaisedEvents => events.AsReadOnly();
 
     public Guid Id { get; private set; }
+
+    internal void ClearEvents() => events.Clear();
 }

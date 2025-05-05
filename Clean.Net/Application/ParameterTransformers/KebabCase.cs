@@ -13,7 +13,7 @@ public class KebabCaseOutputParameterTransformer : IOutboundParameterTransformer
     private static readonly string pascalCaseSplitRegex = "(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])";
 
     public string TransformOutbound(object routeValue) =>
-        routeValue == null ? null : ConvertToKebabCase(routeValue.ToString());
+        routeValue is null ? null : ConvertToKebabCase(routeValue.ToString());
 
     private static string ConvertToKebabCase(string input) =>
         string.IsNullOrEmpty(input)

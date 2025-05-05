@@ -16,6 +16,6 @@ public static class MethodInfoExtensions
     public static Type GetParameterTypeThatImplements<TInterface>(this MethodInfo methodInfo) =>
         methodInfo
             .GetParameters()
-            .Select(parameter => parameter.ParameterType)
-            .SingleOrDefault(parameterType => parameterType.Implements(typeof(TInterface)));
+            .SingleOrDefault(parameter => parameter.ParameterType.Implements(typeof(TInterface)))
+            ?.ParameterType;
 }

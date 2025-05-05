@@ -8,7 +8,7 @@ internal static class ValidationEndpointFilterFactory
     {
         var inputType = context.MethodInfo.GetParameterTypeThatImplements<IInput>();
 
-        return async invocationContext => inputType != null
+        return async invocationContext => inputType is not null
             ? await CreateFluentValidationEndpointFilter(inputType).InvokeAsync(invocationContext, next)
             : await next(invocationContext);
     }

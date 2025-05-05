@@ -10,8 +10,8 @@ public interface IEntityGateway<TEntity> where TEntity : Entity
 {
     IEntityGateway<TEntity> Add(TEntity entity);
 
-    Task<TEntity> FindAsync(params object[] key);
-    TEntity Find(params object[] key) => FindAsync(key).GetAwaiter().GetResult();
+    Task<TEntity> FindAsync(params object[] keyValues);
+    TEntity Find(params object[] keyValues) => FindAsync(keyValues).GetAwaiter().GetResult();
 
     Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null);
     IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null) => GetAllAsync(predicate).GetAwaiter().GetResult();
@@ -25,8 +25,8 @@ public interface IEntityGateway<TEntity> where TEntity : Entity
     Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
     bool Any(Expression<Func<TEntity, bool>> predicate) => AnyAsync(predicate).GetAwaiter().GetResult();
 
-    Task<IEntityGateway<TEntity>> DeleteAsync(params object[] key);
-    IEntityGateway<TEntity> Delete(params object[] key) => DeleteAsync(key).GetAwaiter().GetResult();
+    Task<IEntityGateway<TEntity>> DeleteAsync(params object[] keyValues);
+    IEntityGateway<TEntity> Delete(params object[] keyValues) => DeleteAsync(keyValues).GetAwaiter().GetResult();
 
     Task SaveChangesAsync();
     void SaveChanges() => Task.Run(SaveChangesAsync);
