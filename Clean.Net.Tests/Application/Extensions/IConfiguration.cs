@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Clean.Net;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Clean.Net.Tests;
+namespace Application.Extensions;
 
-[Collection("Application.Extensions")]
 public sealed class IConfigurationTests
 {
     [Fact]

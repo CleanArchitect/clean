@@ -5,6 +5,7 @@ namespace Clean.Net;
 /// <summary>
 /// Injectable service which handles any <see cref="IInput"/> by finding the corresponding
 /// Use Case <see cref="IUseCase{TInput}"/>, executing it and returning the <see cref="IOutput"/>.
+/// Supports a couple of default IInput/IOutput interfaces.
 /// </summary>
 public interface IInputHandler
 {

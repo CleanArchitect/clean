@@ -19,9 +19,9 @@ public static class DomainServiceCollectionExtensions
     /// <returns>The modified <see cref="IServiceCollection"/> with registered services.</returns>
     public static IServiceCollection AddCleanDomain(this IServiceCollection services, Assembly domainAssembly = null, ServiceLifetime serviceLifetime = ServiceLifetime.Scoped) =>
         services
-            .AddServices(typeof(IValidator<>), domainAssembly ??= Assembly.GetCallingAssembly(), serviceLifetime)
-            .AddServices(typeof(IUseCase<>), domainAssembly, serviceLifetime)
-            .AddServices(typeof(IEventHandler<>), domainAssembly, serviceLifetime)
+            .AddServiceImplementations(typeof(IValidator<>), domainAssembly ??= Assembly.GetCallingAssembly(), serviceLifetime)
+            .AddServiceImplementations(typeof(IUseCase<>), domainAssembly, serviceLifetime)
+            .AddServiceImplementations(typeof(IEventHandler<>), domainAssembly, serviceLifetime)
             .AddSingleton<IInputHandler, InputHandler>()
             .AddSingleton<IEventBus, EventBus>();
 }

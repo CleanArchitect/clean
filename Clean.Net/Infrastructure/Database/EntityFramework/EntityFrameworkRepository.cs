@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Clean.Net;
 
-public class EntityFrameworkRepository<TEntity>(DbContext dbContext, IEventBus eventBus) : IEntityGateway<TEntity> where TEntity : Entity
+public class EntityFrameworkRepository<TEntity>(DbContext dbContext, IEventBus eventBus) : IDisposable, IEntityGateway<TEntity> where TEntity : Entity
 {
     public virtual async Task<TEntity> FindAsync(params object[] keyValues) =>
         await dbContext
@@ -52,6 +52,15 @@ public class EntityFrameworkRepository<TEntity>(DbContext dbContext, IEventBus e
         return this;
     }
 
+    public virtual IEntityGateway<TEntity> AddRange(IEnumerable<TEntity> entities)
+    {
+        dbContext
+            .Set<TEntity>()
+            .AddRange(entities);
+
+        return this;
+    }
+
     public virtual async Task<IEntityGateway<TEntity>> DeleteAsync(params object[] keyValues)
     {
         var entity = await dbContext
@@ -73,4 +82,7 @@ public class EntityFrameworkRepository<TEntity>(DbContext dbContext, IEventBus e
 
         await eventBus.RaiseEventAsync(raisedEvents);
     }
+
+    public void Dispose() =>
+        dbContext.Dispose();
 }

@@ -9,6 +9,7 @@ namespace Clean.Net;
 public interface IEntityGateway<TEntity> where TEntity : Entity
 {
     IEntityGateway<TEntity> Add(TEntity entity);
+    IEntityGateway<TEntity> AddRange(IEnumerable<TEntity> entities);
 
     Task<TEntity> FindAsync(params object[] keyValues);
     TEntity Find(params object[] keyValues) => FindAsync(keyValues).GetAwaiter().GetResult();

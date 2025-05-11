@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+﻿using Clean.Net;
+using System.Reflection;
 
-namespace Clean.Net.Tests;
+namespace Extensions;
 
-[Collection("Extensions")]
 public class MethodInfoExtensionsTests
 {
     [Fact]

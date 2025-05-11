@@ -1,20 +1,19 @@
-﻿namespace Clean.Net.Tests;
+﻿using Clean.Net;
 
-[Collection("Extensions")]
+namespace Extensions;
+
 public class StringExtensionsTests
 {
     [Theory]
-    [InlineData("KEBAB CASE", "KEBAB-CASE")]
-    [InlineData("KebabCase", "Kebab-Case")]
-    [InlineData("Kebab-Case", "Kebab-Case")]
-    [InlineData("kebab case", "kebab-case")]
-    [InlineData("Kebab CaseKebab", "Kebab-Case-Kebab")]
-    [InlineData("Kebab Case Kebab", "Kebab-Case-Kebab")]
-    [InlineData("Kebab Case-Kebab", "Kebab-Case-Kebab")]
-    [InlineData("Kebab_Case-Kebab", "Kebab-Case-Kebab")]
-    public void ToKebabCase_Returns_Expected_Kebab(string input, string expectedKebab)
+    [ClassData(typeof(DelimitersTheoryData))]
+    public void ToKebabCase_ReturnsExpectedKebab(string delimiter)
     {
-        // arrange & act
+        // arrange
+        const string expectedKebab = "Kébâb-Cäsè-KÊBAB";
+
+        var input = "  Kébâb CäsèKÊBAB  ".Replace(" ", delimiter);
+
+        // act
         var kebab = input.ToKebabCase();
 
         // assert
@@ -22,18 +21,15 @@ public class StringExtensionsTests
     }
 
     [Theory]
-    [InlineData("SNAKE CASE", "SNAKE_CASE")]
-    [InlineData("SnakeCase", "Snake_Case")]
-    [InlineData("Snake-Case", "Snake_Case")]
-    [InlineData("snake case", "snake_case")]
-    [InlineData("snake_case", "snake_case")]
-    [InlineData("Snake CaseSnake", "Snake_Case_Snake")]
-    [InlineData("Snake Case Snake", "Snake_Case_Snake")]
-    [InlineData("Snake Case-Snake", "Snake_Case_Snake")]
-    [InlineData("Snake_Case-Snake", "Snake_Case_Snake")]
-    public void ToSnakeCase_Returns_Expected_Snake(string input, string expectedSnake)
+    [ClassData(typeof(DelimitersTheoryData))]
+    public void ToSnakeCase_ReturnsExpectedSnake(string delimiter)
     {
-        // arrange & act
+        // arrange
+        const string expectedSnake = "Snâké_Cäsè_SNAKÊ";
+
+        var input = "  Snâké CäsèSNAKÊ  ".Replace(" ", delimiter);
+
+        // act
         var snake = input.ToSnakeCase();
 
         // assert
@@ -41,20 +37,55 @@ public class StringExtensionsTests
     }
 
     [Theory]
-    [InlineData("PASCAL CASE", "PascalCase")]
-    [InlineData("PascalCase", "PascalCase")]
-    [InlineData("Pascal-Case", "PascalCase")]
-    [InlineData("pascal case", "PascalCase")]
-    [InlineData("Pascal CasePascal", "PascalCasePascal")]
-    [InlineData("Pascal Case Pascal", "PascalCasePascal")]
-    [InlineData("Pascal Case-Pascal", "PascalCasePascal")]
-    [InlineData("Pascal_Case-Pascal", "PascalCasePascal")]
-    public void ToPascalCase_Returns_Expected_Pascal(string input, string expectedPascal)
+    [ClassData(typeof(DelimitersTheoryData))]
+    public void ToPascalCase_ReturnsExpectedPascal(string delimiter)
     {
-        // arrange & act
+        // arrange
+        const string expectedPascal = "PâskálCäsèPâscàl";
+
+        var input = "  Pâskál CäsèPÂSCÀL  ".Replace(" ", delimiter);
+
+        // act
         var pascal = input.ToPascalCase();
 
         // assert
         Assert.Equal(expectedPascal, pascal);
+    }
+
+    [Theory]
+    [ClassData(typeof(DelimitersTheoryData))]
+    public void ToCamelCase_ReturnsExpectedCamel(string delimiter)
+    {
+        // arrange
+        const string expectedCamel = "câmélCäsèCâmèl";
+
+        var input = "  Câmél CäsèCÂMÈL  ".Replace(" ", delimiter);
+
+        // act
+        var camel = input.ToCamelCase();
+
+        // assert
+        Assert.Equal(expectedCamel, camel);
+    }
+
+    private class DelimitersTheoryData : TheoryData<string>
+    {
+        public DelimitersTheoryData()
+        {
+            Add("_");
+            Add("-");
+            Add("/");
+            Add("\\");
+            Add("^");
+            Add("'");
+            Add(".");
+            Add(",");
+            Add("=");
+            Add("`");
+            Add(";");
+            Add(":");
+            Add("&");
+            Add("#");
+        }
     }
 }
