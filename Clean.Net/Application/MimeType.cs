@@ -6,17 +6,17 @@
 /// </summary>
 public static partial class MimeType
 {
-    public static readonly string Csv = Types[".csv"];
-    public static readonly string Docx = Types[".docx"];
-    public static readonly string Jpg = Types[".jpg"];
-    public static readonly string Pptx = Types[".pptx"];
-    public static readonly string Png = Types[".png"];
-    public static readonly string Pdf = Types[".pdf"];
-    public static readonly string Rar = Types[".rar"];
-    public static readonly string Txt = Types[".txt"];
-    public static readonly string Xlsx = Types[".xlsx"];
-    public static readonly string Xml = Types[".xml"];
-    public static readonly string Zip = Types[".zip"];
+    public static string Csv => Types[".csv"];
+    public static string Docx => Types[".docx"];
+    public static string Jpg => Types[".jpg"];
+    public static string Pptx => Types[".pptx"];
+    public static string Png => Types[".png"];
+    public static string Pdf => Types[".pdf"];
+    public static string Rar => Types[".rar"];
+    public static string Txt => Types[".txt"];
+    public static string Xlsx => Types[".xlsx"];
+    public static string Xml => Types[".xml"];
+    public static string Zip => Types[".zip"];
 
     /// <summary>
     /// Dictionary with most common file extensions and their MIME types (based on MDN docs).
