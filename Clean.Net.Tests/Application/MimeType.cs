@@ -1,4 +1,6 @@
-﻿namespace Application;
+﻿using Clean.Net;
+
+namespace Application;
 
 public class MimeTypeTests
 {
