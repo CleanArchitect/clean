@@ -7,9 +7,9 @@ namespace Clean.Net;
 /// that converts route values from PascalCase to lowercase kebab.
 /// </summary>
 /// <remarks>
-/// "/Api/TodoItems/" => "/api/todo-items/"
+/// MyExamplesController => "my-examples" 
 /// </remarks>
-public class KebabCaseOutputParameterTransformer : IOutboundParameterTransformer
+public class KebabCaseOutboundParameterTransformer : IOutboundParameterTransformer
 {
     public string TransformOutbound(object routeValue) =>
         routeValue?

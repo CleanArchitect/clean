@@ -11,7 +11,7 @@ public class KebabCaseOutputParameterTransformerTests
     public void TransformOutbound_ReturnsKebabCaseUri(string route, string expectedResult)
     {
         // arrange
-        var transformer = new KebabCaseOutputParameterTransformer();
+        var transformer = new KebabCaseOutboundParameterTransformer();
 
         // act
         var result = transformer.TransformOutbound(route);
