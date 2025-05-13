@@ -3,10 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace Clean.Net;
 
-public static class StringExtensions
+public static class CasingStringExtensions
 {
+    private const string SplitWordsPattern = @"(?<=[\p{Ll}])(?=[\p{Lu}])|(?<=[\p{Lu}])(?=[\p{Lu}][\p{Ll}])";
+    private const string SplitDelimitersPattern = @"[_/\-^'.,=`;:&#\\]+";
+
     /// <summary>
-    /// Converts the input string to kebab case, replacing spaces or other delimiters with hyphens ('-').
+    /// Converts the input string to kebab case, replacing spaces and other delimiters with hyphens ('-').
     /// </summary>
     /// <returns>
     /// "Hello world" => "Hello-world" <br/>
@@ -15,11 +18,11 @@ public static class StringExtensions
     /// </returns>
     public static string ToKebabCase(this string input, params char[] excludeDelimiters) =>
         input?
-            .ToSentence(excludeDelimiters)
-            .Replace(' ', '-');
+            .SplitWords()
+            .ReplaceDelimiters("-", excludeDelimiters);
 
     /// <summary>
-    /// Converts the input string to snake case, replacing spaces or other delimiters with underscores ('_').
+    /// Converts the input string to snake case, replacing spaces and other delimiters with underscores ('_').
     /// </summary>
     /// <returns>
     /// "Hello world" => "Hello_world" <br/>
@@ -28,8 +31,8 @@ public static class StringExtensions
     /// </returns>
     public static string ToSnakeCase(this string input, params char[] excludeDelimiters) =>
         input?
-            .ToSentence(excludeDelimiters)
-            .Replace(' ', '_');
+            .SplitWords()
+            .ReplaceDelimiters("_", excludeDelimiters);
 
     /// <summary>
     /// Converts the input string to PascalCase, capitalizing the first letter of each word and removing delimiters.
@@ -41,7 +44,7 @@ public static class StringExtensions
     /// </returns>
     public static string ToPascalCase(this string input, params char[] excludeDelimiters) =>
         CultureInfo.CurrentCulture.TextInfo
-            .ToTitleCase(input?.ToSentence(excludeDelimiters).ToLower())
+            .ToTitleCase(input?.SplitWords().ReplaceDelimiters(" ", excludeDelimiters).ToLower())
             .Replace(" ", "");
 
     /// <summary>
@@ -52,37 +55,26 @@ public static class StringExtensions
     /// "some_text_HERE" => "someTextHere" <br/>
     /// "Complex-example-string" => "complexExampleString"
     /// </returns>
-    public static string ToCamelCase(this string input, params char[] excludeDelimiters)
-    {
-        var pascalCase = input?
-            .ToPascalCase(excludeDelimiters);
-
-        if (string.IsNullOrWhiteSpace(pascalCase))
-            return pascalCase;
-
-        return char.ToLower(pascalCase[0]) + pascalCase[1..];
-    }
-
-    /// <summary>
-    /// Converts the input string to a sentence, all delimiters are replaced by spaces 
-    /// and words are split up by PascalCase. Undo all casing like kebab, snake, camel or pascal.
-    /// </summary>
-    /// <returns>
-    /// "HelloWorld" => "Hello World" <br/>
-    /// "some_text_HERE" => "some text HERE" <br/>
-    /// "Complex-example-string" => "Complex Example String"
-    /// </returns>
-    public static string ToSentence(this string input, params char[] excludeDelimiters) =>
+    public static string ToCamelCase(this string input, params char[] excludeDelimiters) =>
         input?
-            .ReplaceDelimiters(excludeDelimiters)
-            .SplitPascalCase();
+            .ToPascalCase(excludeDelimiters)
+            .FirstToLower();
 
-    private static string ReplaceDelimiters(this string input, params char[] excludeDelimiters) =>
-        Regex
-            .Replace(input, $"[{new([.. @"_/\-^'.,=`;:&#\\".Where(delimiter => !excludeDelimiters.Contains(delimiter))])}]+", " ", RegexOptions.Compiled)
-            .Trim();
+    private static string FirstToLower(this string input) =>
+        string.IsNullOrWhiteSpace(input)
+            ? input
+            : char.ToLower(input[0]) + input[1..];
 
-    private static string SplitPascalCase(this string input) =>
+    private static string ReplaceDelimiters(this string input, string replacementDelimiter, params char[] excludeDelimiters) =>
+        SplitDelimitersRegex(excludeDelimiters)
+            .Replace(input, " ")
+            .Trim()
+            .Replace(" ", replacementDelimiter);
+
+    private static string SplitWords(this string input) =>
         Regex
-            .Replace(input, @"(?<=[\p{Ll}])(?=[\p{Lu}])|(?<=[\p{Lu}])(?=[\p{Lu}][\p{Ll}])", " ", RegexOptions.Compiled);
+            .Replace(input, SplitWordsPattern, " ", RegexOptions.Compiled);
+
+    private static Regex SplitDelimitersRegex(char[] excludeDelimiters) =>
+        new(new([.. SplitDelimitersPattern.Where(delimiter => !excludeDelimiters.Contains(delimiter))]));
 }

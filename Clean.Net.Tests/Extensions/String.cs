@@ -2,7 +2,7 @@
 
 namespace Extensions;
 
-public class StringExtensionsTests
+public class CasingStringExtensionsTests
 {
     [Theory]
     [ClassData(typeof(DelimitersTheoryData))]
@@ -72,6 +72,7 @@ public class StringExtensionsTests
     {
         public DelimitersTheoryData()
         {
+            Add(" ");
             Add("_");
             Add("-");
             Add("/");
