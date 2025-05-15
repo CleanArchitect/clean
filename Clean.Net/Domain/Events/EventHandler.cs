@@ -9,8 +9,10 @@ internal interface IEventHandler
 
 internal sealed class EventHandler<TEvent>(IServiceProvider serviceProvider) : IEventHandler where TEvent : class, IEvent
 {
+    private readonly IEventHandler<TEvent> handlerService =
+        serviceProvider
+            .GetService<IEventHandler<TEvent>>() ?? throw new InvalidOperationException($"No handler found for event type {typeof(TEvent).Name}");
+
     public async Task HandleAsync(IEvent raisedEvent) =>
-        await serviceProvider
-            .GetService<IEventHandler<TEvent>>()
-            .HandleAsync((TEvent)raisedEvent);
+        await handlerService.HandleAsync((TEvent)raisedEvent);
 }

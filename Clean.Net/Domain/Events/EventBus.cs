@@ -8,11 +8,11 @@ internal sealed class EventBus(IServiceScopeFactory serviceScopeFactory) : IEven
     {
         foreach (var raisedEvent in raisedEvents)
         {
-            await RaiseEventAsync(raisedEvent);
+            await HandleEventAsync(raisedEvent);
         }
     }
 
-    private async Task RaiseEventAsync(IEvent raisedEvent)
+    private async Task HandleEventAsync(IEvent raisedEvent)
     {
         await using var scope = serviceScopeFactory.CreateAsyncScope();
 

@@ -3,6 +3,14 @@ using System.Linq.Expressions;
 
 namespace Clean.Net;
 
+/// <summary>
+/// A default generic implementation for service type <see cref="IEntityGateway{TEntity}"/> using Entity Framework.
+/// Inherit this class and override functionality if needed and register it using 
+/// <see cref="EntityFrameworkServiceCollectionExtensions.AddCleanEntityFramework{TDbContext}(Microsoft.Extensions.DependencyInjection.IServiceCollection, Action{DbContextOptionsBuilder}, Type)"/>. 
+/// </summary>
+/// <typeparam name="TEntity">Type parameter, must be of type Entity</typeparam>
+/// <param name="dbContext">EF</param>
+/// <param name="eventBus">Domain Events will be raised when SaveChanges is called.</param>
 public class EntityFrameworkRepository<TEntity>(DbContext dbContext, IEventBus eventBus) : IDisposable, IEntityGateway<TEntity> where TEntity : Entity
 {
     public virtual async Task<TEntity> FindAsync(params object[] keyValues) =>
