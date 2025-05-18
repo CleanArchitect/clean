@@ -4,7 +4,6 @@
         <OutputType>Library</OutputType>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>disable</Nullable>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -21,13 +20,15 @@
         <RepositoryUrl>https://github.com/CleanArchitect/clean</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageTags>Clean, CleanCode, CleanArchitecture, Domain-Driven-Design, DDD, .NET, C#, FluentValidation, EntityFramework, UseCases</PackageTags>
+        <PackageTags>Clean, CleanCode, CleanArchitecture, Domain-Driven-Design, DDD, .NET, C#, EntityFramework, UseCases</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.3.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.15" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.5" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     </ItemGroup>
 

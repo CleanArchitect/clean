@@ -8,7 +8,7 @@ internal static class InfrastructureDatabaseServiceCollectionExtensions
 {
     public static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString) =>
         services
-            .AddCleanEntityFramework<ExampleDbContext>(options => options
+            .AddCleanInfrastructure<ExampleDbContext>(options => options
                 .UseNpgsql(connectionString)
                 .UseLazyLoadingProxies());
 }

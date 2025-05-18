@@ -9,6 +9,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentValidation" Version="12.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
         <InternalsVisibleTo Include="Example.Infrastructure" />
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     </ItemGroup>

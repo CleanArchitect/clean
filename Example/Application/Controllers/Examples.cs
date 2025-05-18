@@ -14,7 +14,7 @@ public sealed class ExamplesController(IInputHandler handler) : CleanController
 
     [HttpPost]
     public async Task<ActionResult<ICreatedOutput>> Create([FromBody] CreateExampleInput input) =>
-        CreatedAt(nameof(Get), await handler.HandleAsync(input));
+        CreatedOutputAt(nameof(Get), await handler.HandleAsync(input));
 
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<GetExampleOutput>> Get(Guid id) =>
@@ -26,5 +26,5 @@ public sealed class ExamplesController(IInputHandler handler) : CleanController
 
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult<IOutput>> Delete(Guid id) =>
-        NoContent(await handler.HandleAsync(new DeleteExampleInput(id)));
+        NoContentOutput(await handler.HandleAsync(new DeleteExampleInput(id)));
 }

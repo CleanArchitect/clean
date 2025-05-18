@@ -1,9 +1,8 @@
 ﻿using Clean.Net;
 using Example.Domain;
 using Example.Infrastructure;
-using FluentValidation.AspNetCore;
-using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 namespace Example.Application;
 
@@ -18,9 +17,8 @@ internal static class WebApplicationBuilderExtensions
             .AddDomain()
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
-            .AddFluentValidationRulesToSwagger()
             .AddFluentValidationAutoValidation()
-            .AddControllers(options => options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseOutputParameterTransformer())));
+            .AddControllers(options => options.Conventions.Add(new RouteTokenTransformerConvention(new KebabCaseOutboundParameterTransformer())));
 
         return builder;
     }

@@ -9,7 +9,7 @@ namespace Clean.Net;
 public abstract partial class CleanController : ControllerBase
 {
     [NonAction]
-    protected CreatedAtActionResult CreatedAt(string actionName, ICreatedOutput output, params (string Key, object Value)[] additionalRouteValues)
+    protected CreatedAtActionResult CreatedOutputAt(string actionName, ICreatedOutput output, params (string Key, object Value)[] additionalRouteValues)
     {
         var routeValues = additionalRouteValues
             .ToDictionary(
@@ -22,10 +22,10 @@ public abstract partial class CleanController : ControllerBase
     }
 
     [NonAction]
-    protected NoContentResult NoContent(IOutput _) =>
+    protected NoContentResult NoContentOutput(IOutput _) =>
         NoContent();
 
     [NonAction]
-    protected FileResult File(IFileOutput output) =>
+    protected FileResult FileOutput(IFileExportOutput output) =>
         File(output.File, output.Filename.ToMimeType(), output.Filename);
 }

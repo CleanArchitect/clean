@@ -19,7 +19,7 @@ public static class EntityFrameworkServiceCollectionExtensions
     /// If not provided a default Entity Framework gateway will be used.
     /// </param>
     /// <returns>The <see cref="IServiceCollection"/> with registered DbContext and Entity Gateway</returns>
-    public static IServiceCollection AddCleanEntityFramework<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> options = null, Type typeEntityGateway = null) where TDbContext : DbContext =>
+    public static IServiceCollection AddCleanInfrastructure<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> options = null, Type typeEntityGateway = null) where TDbContext : DbContext =>
         services
             .AddDbContext<DbContext, TDbContext>(options)
             .AddEntityGateway(typeEntityGateway ?? typeof(EntityFrameworkRepository<>));
@@ -27,5 +27,5 @@ public static class EntityFrameworkServiceCollectionExtensions
     private static IServiceCollection AddEntityGateway(this IServiceCollection services, Type typeEntityGateway) =>
         typeEntityGateway.Implements(typeof(IEntityGateway<>))
             ? services.AddScoped(typeof(IEntityGateway<>), typeEntityGateway)
-            : throw new InvalidOperationException($"Invalid Type:'{typeEntityGateway}' must implement IEntityGateway<TEntity>");
+            : throw new InvalidOperationException($"Invalid Type:'{typeEntityGateway}' must implement {typeof(IEntityGateway<>)}");
 }

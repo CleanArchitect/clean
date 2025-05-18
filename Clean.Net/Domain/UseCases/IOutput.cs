@@ -17,7 +17,7 @@ public interface ICreatedOutput : IOutput
 /// <summary>
 /// Defines an Output for a file.
 /// </summary>
-public interface IFileOutput : IOutput
+public interface IFileExportOutput : IOutput
 {
     byte[] File { get; }
     string Filename { get; }
@@ -32,7 +32,7 @@ public static class Output
 
     public static ICreatedOutput Created(Guid id) => new CreatedOutput(id);
 
-    public static IFileOutput File(byte[] file, string filename) => new FileOutput(file, filename);
+    public static IFileExportOutput File(byte[] file, string filename) => new FileOutput(file, filename);
 
     private sealed class EmptyOutput : IOutput { }
 
@@ -41,7 +41,7 @@ public static class Output
         public Guid? Id => id;
     }
 
-    private sealed class FileOutput(byte[] file, string filename) : IFileOutput
+    private sealed class FileOutput(byte[] file, string filename) : IFileExportOutput
     {
         public byte[] File => file;
         public string Filename => filename;

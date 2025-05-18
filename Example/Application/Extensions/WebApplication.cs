@@ -1,6 +1,4 @@
-﻿using Clean.Net;
-
-namespace Example.Application;
+﻿namespace Example.Application;
 
 internal static class WebApplicationExtensions
 {
@@ -10,6 +8,8 @@ internal static class WebApplicationExtensions
             .UseSwagger()
             .UseSwaggerUI();
 
+        app.MapControllers();
+
         return app;
     }
 
@@ -17,8 +17,7 @@ internal static class WebApplicationExtensions
     {
         app
             .MapGroup("/minimal/examples")
-            .ToExamples()
-            .WithInputValidation();
+            .ToExamples();
 
         return app;
     }

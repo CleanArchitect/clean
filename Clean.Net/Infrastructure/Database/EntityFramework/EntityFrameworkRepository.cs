@@ -6,7 +6,7 @@ namespace Clean.Net;
 /// <summary>
 /// A default generic implementation for service type <see cref="IEntityGateway{TEntity}"/> using Entity Framework.
 /// Inherit this class and override functionality if needed and register it using 
-/// <see cref="EntityFrameworkServiceCollectionExtensions.AddCleanEntityFramework{TDbContext}(Microsoft.Extensions.DependencyInjection.IServiceCollection, Action{DbContextOptionsBuilder}, Type)"/>. 
+/// <see cref="EntityFrameworkServiceCollectionExtensions.AddCleanInfrastructure{TDbContext}(Microsoft.Extensions.DependencyInjection.IServiceCollection, Action{DbContextOptionsBuilder}, Type)"/>. 
 /// </summary>
 /// <typeparam name="TEntity">Type parameter, must be of type Entity</typeparam>
 /// <param name="dbContext">EF</param>

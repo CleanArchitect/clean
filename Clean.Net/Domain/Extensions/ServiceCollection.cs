@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Clean.Net;
@@ -19,8 +18,7 @@ public static class DomainServiceCollectionExtensions
     /// <returns>The modified <see cref="IServiceCollection"/> with registered services.</returns>
     public static IServiceCollection AddCleanDomain(this IServiceCollection services, Assembly domainAssembly = null, ServiceLifetime serviceLifetime = ServiceLifetime.Scoped) =>
         services
-            .AddServiceImplementations(typeof(IValidator<>), domainAssembly ??= Assembly.GetCallingAssembly(), serviceLifetime)
-            .AddServiceImplementations(typeof(IUseCase<>), domainAssembly, serviceLifetime)
+            .AddServiceImplementations(typeof(IUseCase<>), domainAssembly ??= Assembly.GetCallingAssembly(), serviceLifetime)
             .AddServiceImplementations(typeof(IEventHandler<>), domainAssembly, serviceLifetime)
             .AddSingleton<IInputHandler, InputHandler>()
             .AddSingleton<IEventBus, EventBus>();

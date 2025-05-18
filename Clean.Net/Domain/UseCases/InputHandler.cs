@@ -11,7 +11,7 @@ public interface IInputHandler
 {
     Task<IOutput> HandleAsync(IInput input);
     Task<ICreatedOutput> HandleAsync(ICreateInput input);
-    Task<IFileOutput> HandleAsync(IFileExportInput input);
+    Task<IFileExportOutput> HandleAsync(IFileExportInput input);
 }
 
 internal sealed class InputHandler(IServiceScopeFactory serviceScopeFactory) : IInputHandler
@@ -22,8 +22,8 @@ internal sealed class InputHandler(IServiceScopeFactory serviceScopeFactory) : I
     public async Task<ICreatedOutput> HandleAsync(ICreateInput input) =>
         await ExecuteUseCase<ICreatedOutput>(input);
 
-    public async Task<IFileOutput> HandleAsync(IFileExportInput input) =>
-        await ExecuteUseCase<IFileOutput>(input);
+    public async Task<IFileExportOutput> HandleAsync(IFileExportInput input) =>
+        await ExecuteUseCase<IFileExportOutput>(input);
 
     private async Task<TOutput> ExecuteUseCase<TOutput>(IInput input) where TOutput : IOutput
     {
