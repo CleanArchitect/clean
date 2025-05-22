@@ -30,7 +30,7 @@ Clean.Net is a lightweight C# .NET package implementing Clean Architecture with 
 To wire everything up, make sure you call the following registration method from your Domain assembly (the assembly containing all your Entities, Use Cases and Events):
 
 ```csharp
-services.AddCleanDomain();
+services.AddCleanNet();
 ```
 
 This method registers all necessary services for handling Use Cases and Domain Events.
@@ -60,7 +60,7 @@ IEntityGateway<TEntity>  ── ── ► IEventBus
                           event
 ```
 
-And the dependency structure between layers looks like:
+And the dependencies between layers should look like:
 
 ```
          +---------------------+
@@ -80,7 +80,7 @@ And the dependency structure between layers looks like:
                \           │
          +------▼--------------+
          | Infrastructure Layer|
-         | (EF, Mongo, Elastic)|
+         | (EF, Mongo, etc)    |
          +---------------------+
 ```
 
@@ -216,7 +216,7 @@ internal sealed class AppSettings : Settings // Clean.Net
 var appSettings = builder.Configuration.GetAppSettings<AppSettings>(); // Will throw exception when ApplicationName is empty
 ```
 
-You can also register and validate (using Data Annotations) other settings using:
+You can also register and validate (with [Data Annotations](https://learn.microsoft.com/en-us/aspnet/mvc/overview/older-versions-1/models-data/validation-with-the-data-annotation-validators-cs)) other `Settings` classes as singletons using:
 
 ```csharp
 services.AddSettings(myOtherSettings);
@@ -225,10 +225,10 @@ services.AddSettings(myOtherSettings);
 ### 3. Infrastructure Layer Setup
 The package provides a default `IEntityGateway<TEntity>` implementation for Entity Framework.
 
-To use this, register the following services:
+To use this, register the following:
 
 ```csharp
-services.AddCleanInfrastructure<TDbContext>(
+services.AddCleanEntityFramework<TDbContext>(
     options => options.UseSqlServer("YourConnectionString"),
     typeEntityGateway: null // Optional type for custom IEntityGateway<TEntity> implementation
 );
@@ -250,23 +250,26 @@ services.AddControllers(options =>
 ```
 
 - **General Extension Methods:**  
-Usefull extension methods for example scanning assemblies for service implementations and registering them to the ServiceCollection.
+Usefull extension methods for example scanning assemblies for service implementations and registering them to the `ServiceCollection`.
 ```csharp
 services.AddServiceImplementations(typeof(IMyInterface)); // default Assembly.GetCallingAssembly() and ServiceLifetime.Scoped
 ```
   
-Checking Type implementations
+- **Type Extension:**  
+Use the method `Type.Implements(Type interfaceType)` to check if a `Type` implements a given interface type, supports open generic interface types. For example:
 ```csharp
-var implements = typeof(EntityFrameworkRepository<>).Implements(typeof(IEntityGateway<>)); // true
+typeof(EntityFrameworkRepository<>).Implements(typeof(IEntityGateway<>)); // true
 ```
    
-And converting strings to various cases (kebab-case, snake_case, PascalCase, camelCase).  
+- **String Extensions:**  
+And converting strings to various cases (`ToKebabCase()`, `ToSnakeCase()`, `ToPascalCase()`, `ToCamelCase()`). For example:
 ```csharp
-var kebabCase = "myCamelCaseString".ToKebabCase(); // my-camel-case-string
+var kebabCase = "myKebabCaseString".ToKebabCase(); // my-camel-case-string
 var pascalCase = "my-pascal.case".ToPascalCase(); // MyPascalCase
 ```
-  
-Also, a small helper class for MIME type resolution makes file handling simpler:
+
+- **MIME types:**   
+The package also contains a small helper class for MIME type resolution making file handling simpler. Usage:
   
 ```csharp
 var mimeType = "document.pdf".ToMimeType(); // application/pdf
@@ -283,4 +286,4 @@ Happy coding!
 
 ---
 
-If you need more examples or further customization, feel free to explore extending the provided interfaces and helpers to best fit your project’s needs or checkout the Github Repository. Enjoy building with Clean.Net!
+If you need more examples or further customization, feel free to explore extending the provided interfaces and helpers to best fit your project’s needs or checkout my [Github Repository](https://github.com/CleanArchitect/clean). Enjoy building with Clean.Net!
