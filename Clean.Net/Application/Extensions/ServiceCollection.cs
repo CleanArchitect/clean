@@ -12,5 +12,5 @@ public static class ApplicationServiceCollectionExtensions
     /// <returns>The modified <see cref="IServiceCollection"/> with registered settings.</returns>
     public static IServiceCollection AddSettings<TSettings>(this IServiceCollection services, TSettings settings) where TSettings : Settings =>
         services
-            .AddSingleton(settings.Validate());
+            .AddSingleton(typeof(TSettings), settings.Validate());
 }
